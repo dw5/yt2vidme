@@ -42,10 +42,10 @@ echo $myJSON; */
 {
 "status" : true,
     "page" : {
-        "total" : 
-        "limit" : 
-        "offset" : 
-    }
+        "total" : 10,
+        "limit" : 15,
+        "offset" : 0
+    },
 <?php
 
         /*
@@ -58,20 +58,19 @@ echo $myJSON; */
         $vidtrend->lengthSeconds;
         $vidtrend->videoThumbnails[2]->url; */
 ?>
-
-"videos" : {
+"videos" : [
     <?php
 $vtcurrent = -1;
+
 foreach ($infoyt as $vidtrend) {
-    $vtcurrent = $vtcurrent + 1;
     $vidtrenddummymp4 = "https://vidd.la/cdn/video/vid1.mp4";
-        echo "
-        $vtcurrent : {
+    $vtcurrent = $vtcurrent + 1; 
+    echo "{
         \"video_id\" : \"".$vidtrend->videoId."\",
-        \"url\" : \"https://vidd.la/".$vidtrend->title."\",
+        \"url\" : \"https://vidd.la/".$vidtrend->videoId."\",
         \"complete\" : \"".$vidtrenddummymp4."\",
         \"state\" : \"stored\",
-        \"title\" : \"".$vidtrend->title."\",
+        \"title\" : ".json_encode($vidtrend->title).",
         \"description\" : ".json_encode($vidtrend->description).",
         \"duration\" : ".$vidtrend->lengthSeconds.",
         \"height\" : 360,
@@ -92,10 +91,9 @@ foreach ($infoyt as $vidtrend) {
                 \"avatar\" : ".json_encode($vidtrend->videoThumbnails[2]->url).",
                 \"avatar_url\" : ".json_encode($vidtrend->videoThumbnails[2]->url)."
                 }
-            }
-            ";
+            }"; if(next( $infoyt )) {echo ',';}
 
-    					      }?>
+        }?>
                           
-        }
+        ]
 }
