@@ -1,9 +1,8 @@
 <?php header('Content-Type: application/json');
-$watch_id = $_GET['id'];
-//echo $watch_id;
-//die();
+$getoffset = $_GET['offset'];
+$getlimit = $_GET['limit'];
 try {
-$jsonyt = file_get_contents('https://invidio.us/api/v1/videos/'.$watch_id);
+$jsonyt = file_get_contents('https://invidio.us/api/v1/trending/');
 //.'?fields=authorId,author,title,genre,description,descriptionHtml,published,authorThumbnails,videoThumbnails,viewCount,likeCount,dislikeCount,keywords,dashUrl,formatStreams,hlsUrl&pretty=1');
 
 if ($jsonyt === false) {
@@ -56,14 +55,28 @@ $myJSON = json_encode($myObj);
 echo $myJSON; */
 ?>
 {
-  "status" : true,
-  "video" : {
-    "video_id" : "1234",
-    "url" : "<?=$watch_id?>",
-    "full_url" : "https://vidd.la/<?=$watch_id?>",
-    "embed_url" : "https://vidd.la/e/<?=$watch_id?>",
-    "complete" : "1234.mp4",
-    "complete_url" : "<?=$finalplay;?>",
+"status" : true,
+    "page" : {
+        "total" : 
+        "limit" : 
+        "offset" : 
+    }
+<?php
+    foreach ($infoyt as $vidtrend) {
+        $vidtrend->title; 
+        $vidtrend->videoId;
+        $vidtrend->authorId;
+        $vidtrend->description;
+        $vidtrend->viewCount;
+        $vidtrend->published;
+        $vidtrend->lengthSeconds;
+        $vidtrend->videoThumbnails[2]->url;
+    					      }
+                          ?>
+"videos" : {
+    "video_id" : "<?=$watch_id?>",
+    "url" : "https://vidd.la/<?=$watch_id?>",
+    "complete" : "<?=$finalplay;?>",
     "state" : "stored",
     "title" : "<?=$infoyt->title;?>",
     "description" : <?=json_encode($infoyt->description);?>,
@@ -73,15 +86,18 @@ echo $myJSON; */
     "date_created" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
     "date_stored" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
     "date_completed" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
-    "comment_count" : 0,
-    "view_count" : 1,
+    "comment_count" : "0",
+    "view_count" : "1",
     "version" : 2,
-    "nsfw" : false,
-    "thumbnail" : null,
-    "thumbnail_url" : <?=json_encode($infoyt->videoThumbnails[2]->url);?>,
-    "score" : 1
-  },
-  "progress" : {
-    "progress" : 0.5
-  }
+    "nsfw" : 0,
+    "thumbnail" : <?=json_encode($infoyt->videoThumbnails[2]->url);?>,
+    "score" : 10,
+        "user" : {
+            "user_id" : "",
+            "username" : "",
+            "full_url" : "",
+            "avatar" : "",
+            "avatar_url" : ""
+            }
+        }
 }
