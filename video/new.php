@@ -62,7 +62,8 @@ echo $myJSON; */
         "offset" : 
     }
 <?php
-    foreach ($infoyt as $vidtrend) {
+
+        /*
         $vidtrend->title; 
         $vidtrend->videoId;
         $vidtrend->authorId;
@@ -70,34 +71,44 @@ echo $myJSON; */
         $vidtrend->viewCount;
         $vidtrend->published;
         $vidtrend->lengthSeconds;
-        $vidtrend->videoThumbnails[2]->url;
+        $vidtrend->videoThumbnails[2]->url; */
+?>
+
+"videos" : {
+    <?php
+$vtcurrent = 0;
+foreach ($infoyt as $vidtrend) {
+    $vtcurrent = $vtcurrent + 1;
+        echo "
+        $vtcurrent {
+        \"video_id\" : \"$watch_id\",
+        \"url\" : \"https://vidd.la/$watch_id\",
+        \"complete\" : \"$finalplay;\",
+        \"state\" : \"stored",
+        \"title\" : \"$infoyt->title;\",
+        \"description\" : json_encode($infoyt->description);,
+        \"duration\" : $infoyt->lengthSeconds;,
+        \"height\" : 360,
+        \"width\" : null,
+        \"date_created\" : \"".gmdate("Y-m-d\ H:i:s", $infoyt->published);."\",
+        \"date_stored\" : \"".gmdate("Y-m-d\ H:i:s", $infoyt->published);."\",
+        \"date_completed\" : \"".gmdate("Y-m-d\ H:i:s", $infoyt->published);."\",
+        \"comment_count\" : \"0",
+        \"view_count\" : \"1",
+        \"version\" : 2,
+        \"nsfw\" : 0,
+        \"thumbnail\" : ".json_encode($infoyt->videoThumbnails[2]->url);.",
+        \"score\" : 10,
+            \"user\" : {
+                \"user_id\" : "",
+                \"username\" : "",
+                \"full_url\" : "",
+                \"avatar\" : "",
+                \"avatar_url\" : ""
+                }
+            }"
+
     					      }
                           ?>
-"videos" : {
-    "video_id" : "<?=$watch_id?>",
-    "url" : "https://vidd.la/<?=$watch_id?>",
-    "complete" : "<?=$finalplay;?>",
-    "state" : "stored",
-    "title" : "<?=$infoyt->title;?>",
-    "description" : <?=json_encode($infoyt->description);?>,
-    "duration" : <?=$infoyt->lengthSeconds;?>,
-    "height" : 360,
-    "width" : null,
-    "date_created" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
-    "date_stored" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
-    "date_completed" : "<?php echo gmdate("Y-m-d\ H:i:s", $infoyt->published); ?>",
-    "comment_count" : "0",
-    "view_count" : "1",
-    "version" : 2,
-    "nsfw" : 0,
-    "thumbnail" : <?=json_encode($infoyt->videoThumbnails[2]->url);?>,
-    "score" : 10,
-        "user" : {
-            "user_id" : "",
-            "username" : "",
-            "full_url" : "",
-            "avatar" : "",
-            "avatar_url" : ""
-            }
         }
 }
